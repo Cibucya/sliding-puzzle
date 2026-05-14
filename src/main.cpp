@@ -9,13 +9,17 @@ private:
 	std::vector<int> grid;
 
 public:
-	Board(int width, int height)
-		: width(width),
-		  height(height),
-		  grid(width * height, 0) {
+	Board(size_t w, size_t h)
+		: width(w),
+		  height(h),
+		  grid(w * h, 0) {
 	}
 
-	auto at(int x, int y) {
+	int& at(size_t x, size_t y) {
+		return grid[y * width + x];
+	}
+
+	int at(size_t x, size_t y) const {
 		return grid[y * width + x];
 	}
 
@@ -23,11 +27,12 @@ public:
 		std::string border(width + 2, '-');
 		std::cout << border << '\n';
 
-		for (int i = 0; i < height; ++i) {
+		for (size_t i = 0; i < height; ++i) {
 			std::cout << "|";
-			for (int j = 0; j < width; ++j) {
+			for (size_t j = 0; j < width; ++j) {
 				int val = at(j, i);
-				std::cout << (val == 0 ? ' ' : val);
+				if (val == 0) std::cout << ' ';
+				else std::cout << val;
 			}
 			std::cout << "|\n";
 		}
@@ -41,8 +46,8 @@ void help() {
 }
 
 int main(int argc, char** argv) {
-	int board_w = 0;
-	int board_h = 0;
+	size_t board_w = 0;
+	size_t board_h = 0;
 	if (argc >= 3) {
 		try {
 			board_w = std::stoi(argv[1]);
@@ -53,8 +58,12 @@ int main(int argc, char** argv) {
 			return 1;
 		}
 	}
+	else {
+		help();
+	}
 
-	Board board(board_w, board_w);
+	Board board(board_w, board_h);
+	board.print_board();
 
 	return 0;
 }
