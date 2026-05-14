@@ -1,6 +1,9 @@
+#include <algorithm> // std::shuffle
 #include <iostream>
 #include <vector>
+#include <numeric> // std::iota
 #include <string>
+#include <random> // std::mt19937
 
 class Board {
 private:
@@ -42,6 +45,16 @@ public:
 		
 		std::cout << border << '\n';
 	}
+
+	void randomize() {
+		int max_cell = width * height - 1;
+		std::iota(grid.begin(), grid.end(), 0);
+
+		std::random_device rd;
+		std::mt19937 g(rd());
+
+		std::shuffle(grid.begin(), grid.end(), g);
+	}
 };
 
 void help() {
@@ -63,9 +76,11 @@ int main(int argc, char** argv) {
 	}
 	else {
 		help();
+		return 1;
 	}
 
 	Board board(board_w, board_h);
+	board.randomize();
 	board.print_board();
 
 	return 0;
