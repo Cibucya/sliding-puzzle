@@ -1,9 +1,11 @@
 #include <algorithm> // std::shuffle
+#include <cmath>     // std::log10
+#include <iomanip>   // std::setw
 #include <iostream>
-#include <vector>
-#include <numeric> // std::iota
+#include <numeric>   // std::iota
+#include <random>    // std::mt19937
 #include <string>
-#include <random> // std::mt19937
+#include <vector>
 
 class Board {
 private:
@@ -26,19 +28,28 @@ public:
 		return grid[y * width + x];
 	}
 
+	int max_cell() {
+		return width * height - 1;
+	}
+
 	void print_board() {
-		// Multiply by 2 and add 3 to include separators
-		std::string border(width * 2 + 3, '-');
+		int max_val = max_cell();
+		int cell_w = (max_val == 0) ? 1 : static_cast<int>(std::log10(max_val)) + 1;
+
+		// Add 3 to include paddings
+		size_t border_len = (cell_w + 1) * width + 3;
+		std::string border (border_len, '-');
+
 		std::cout << border << '\n';
 
 		for (size_t i = 0; i < height; ++i) {
 			std::cout << "|";
 			for (size_t j = 0; j < width; ++j) {
 				int val = at(j, i);
-				// Separator to make A by A grid look square and not rectangle
+				// Padding before the number
 				std::cout << ' ';
-				if (val == 0) std::cout << ' ';
-				else std::cout << val;
+				if (val == 0) std::cout << std::string(cell_w, ' ');
+				else std::cout << std::setw(cell_w) << val;
 			}
 			std::cout << " |\n";
 		}
@@ -47,7 +58,6 @@ public:
 	}
 
 	void randomize() {
-		int max_cell = width * height - 1;
 		std::iota(grid.begin(), grid.end(), 0);
 
 		std::random_device rd;
