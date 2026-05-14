@@ -34,6 +34,7 @@ public:
 
 	void print_board() {
 		int max_val = max_cell();
+		// Get number of digits in max number
 		int cell_w = (max_val == 0) ? 1 : static_cast<int>(std::log10(max_val)) + 1;
 
 		// Add 3 to include paddings
@@ -48,12 +49,13 @@ public:
 				int val = at(j, i);
 				// Padding before the number
 				std::cout << ' ';
-				if (val == 0) std::cout << std::string(cell_w, ' ');
+				// \033[47m sets background to white, \033[0m resets
+				if (val == 0) std::cout << "\033[47m\033[30m" << std::string(cell_w, ' ') << "\033[0m";
 				else std::cout << std::setw(cell_w) << val;
 			}
 			std::cout << " |\n";
 		}
-		
+
 		std::cout << border << '\n';
 	}
 
