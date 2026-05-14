@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 
 class Board {
 public:
@@ -15,8 +16,19 @@ public:
 	}
 };
 
-int main(void) {
+int main(int argc, char** argv) {
+	int board_size = 4;
+	if (argc >= 2) {
+		try {
+			board_size = std::stoi(argv[1]);
+		}
+		catch (const std::exception& e) {
+			std::cout << "Error: Board size has to be an integer.\n";
+			return 1;
+		}
+	}
 
+	Board board(board_size);
 
 	return 0;
 }
