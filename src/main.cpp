@@ -24,17 +24,20 @@ public:
 	}
 
 	void print_board() {
-		std::string border(width + 2, '-');
+		// Multiply by 2 and add 3 to include separators
+		std::string border(width * 2 + 3, '-');
 		std::cout << border << '\n';
 
 		for (size_t i = 0; i < height; ++i) {
 			std::cout << "|";
 			for (size_t j = 0; j < width; ++j) {
 				int val = at(j, i);
+				// Separator to make A by A grid look square and not rectangle
+				std::cout << ' ';
 				if (val == 0) std::cout << ' ';
 				else std::cout << val;
 			}
-			std::cout << "|\n";
+			std::cout << " |\n";
 		}
 		
 		std::cout << border << '\n';
