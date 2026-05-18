@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include_directories(include)
 
-file(GLOB SOURCES "src/main.cpp")
+set(SOURCES
+	"src/main.cpp"
+	"src/Board.cpp"
+)
 
 add_executable(sliding ${SOURCES})
