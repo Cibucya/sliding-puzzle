@@ -1,11 +1,4 @@
-#include <algorithm> // std::shuffle
-#include <cmath>     // std::log10
-#include <iomanip>   // std::setw
 #include <iostream>
-#include <numeric>   // std::iota
-#include <random>    // std::mt19937
-#include <string>
-#include <vector>
 #include "Board.hpp"
 
 void help() {
