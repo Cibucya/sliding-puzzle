@@ -46,6 +46,8 @@ int& Board::at(size_t x, size_t y) {
 
 int Board::max_cell() const { return static_cast<int>(grid.size() - 1); }
 
+// TODO: Fix a bug when the function generates unsolvable board. Current
+// implementation generates solvalble board only in ~50% situations
 void Board::randomize() {
     std::iota(grid.begin(), grid.end(), 0);
     std::random_device rd;
