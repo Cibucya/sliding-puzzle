@@ -12,6 +12,10 @@
 
 Board::Board(size_t w, size_t h) : width(w), height(h), grid(w * h, 0) {}
 
+// TODO: Fix a bug when to the function can be passed very big x and small y, so
+// that the resulting coordinate would be wrong.
+// For example if the grid width = 1000 and height = 3, then
+// get_index(2000, 1) would perfectly work even though there is no 2000 x value.
 size_t Board::get_index(size_t x, size_t y) const {
     return y * width + x;
 }
