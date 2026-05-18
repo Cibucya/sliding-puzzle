@@ -20,4 +20,4 @@ private:
 	std::vector<int> grid;
 
 	[[nodiscard]] size_t get_index(size_t x, size_t y) const;
-}
+};
