@@ -38,6 +38,8 @@ int& Board::at(size_t x, size_t y) {
 	return grid[Board::get_index(x, y)];
 }
 
+// TODO: fix a bug when the function would return wrong max_cell when the board
+// is anything except filled with consecutive numbers from 0
 int Board::max_cell() const { return static_cast<int>(grid.size() - 1); }
 
 // TODO: Fix a bug when the function generates unsolvable board. Current
