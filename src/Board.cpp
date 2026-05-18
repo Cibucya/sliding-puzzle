@@ -6,6 +6,7 @@
 #include <iostream>
 #include <numeric>   // std::iota
 #include <random>    // std::mt19937
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -15,8 +16,29 @@ size_t Board::get_index(size_t x, size_t y) const {
     return y * width + x;
 }
 
-int Board::at(size_t x, size_t y) const { return grid[get_index(x, y)]; }
-int& Board::at(size_t x, size_t y) { return grid[get_index(x, y)]; }
+// Returns a value of the cell at (x, y).
+// Throws std::out_of_range if coordinates are out of bounds.
+// This intentional bounds checking catches programming errors early.
+// If performance becomes critical (profiling shows this is a bottleneck),
+// we can refactor to provide an unsafe at_unsafe() variant.
+int Board::at(size_t x, size_t y) const {
+	int idx = Board::get_index(x, y);
+	if (idx >= grid.size()) {
+		throw std::out_of_range("Board index (" + std::to_string(x) +
+                                ", " + std::to_string(y) + ") out of bounds");
+	}
+	return grid[idx];
+}
+
+// Returns a reference to the cell at (x, y).
+int& Board::at(size_t x, size_t y) {
+	int idx = Board::get_index(x, y);
+	if (idx >= grid.size()) {
+		throw std::out_of_range("Board index (" + std::to_string(x) +
+                                ", " + std::to_string(y) + ") out of bounds");
+	}
+	return grid[idx];
+}
 
 int Board::max_cell() const { return static_cast<int>(grid.size() - 1); }
 
