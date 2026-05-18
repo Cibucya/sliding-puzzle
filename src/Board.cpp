@@ -1,4 +1,5 @@
 #include "Board.hpp"
+#include "AnsiColors.hpp"
 #include <algorithm> // std::shuffle
 #include <cmath>     // std::log10
 #include <iomanip>   // std::setw
@@ -39,7 +40,7 @@ void Board::print() const {
             std::cout << " ";
             if (val == 0) {
                 // White block for the empty space
-                std::cout << "\033[47m" << std::string(cell_w, ' ') << "\033[0m";
+                std::cout << ansi::white_bg << std::string(cell_w, ' ') << ansi::reset;
             } else {
                 std::cout << std::setw(cell_w) << val;
             }
