@@ -12,36 +12,30 @@
 
 Board::Board(size_t w, size_t h) : width(w), height(h), grid(w * h, 0) {}
 
-// TODO: Fix a bug when to the function can be passed very big x and small y, so
-// that the resulting coordinate would be wrong.
-// For example if the grid width = 1000 and height = 3, then
-// get_index(2000, 1) would perfectly work even though there is no 2000 x value.
+// Returns an index of the cell (x, y)
+// Throws std::out_of_range in case the coordinates are out of bonds.
+// Decision to make the function throw instead of return -1 was to keep its
+// size_t and the performance is not as critical in the project, so it is better
+// to keep the code clean.
 size_t Board::get_index(size_t x, size_t y) const {
+	if (x >= width || y >= height) {
+		throw std::out_of_range(
+			"Board index (" + std::to_string(x) + ", " + std::to_string(y) +
+			") out of bounds, width = " + std::to_string(width) +
+			", height = " + std::to_string(height) + ")"
+		);
+	}
     return y * width + x;
 }
 
 // Returns a value of the cell at (x, y).
-// Throws std::out_of_range if coordinates are out of bounds.
-// This intentional bounds checking catches programming errors early.
-// If performance becomes critical (profiling shows this is a bottleneck),
-// we can refactor to provide an unsafe at_unsafe() variant.
 int Board::at(size_t x, size_t y) const {
-	int idx = Board::get_index(x, y);
-	if (idx >= grid.size()) {
-		throw std::out_of_range("Board index (" + std::to_string(x) +
-                                ", " + std::to_string(y) + ") out of bounds");
-	}
-	return grid[idx];
+	return grid[Board::get_index(x, y)];
 }
 
 // Returns a reference to the cell at (x, y).
 int& Board::at(size_t x, size_t y) {
-	int idx = Board::get_index(x, y);
-	if (idx >= grid.size()) {
-		throw std::out_of_range("Board index (" + std::to_string(x) +
-                                ", " + std::to_string(y) + ") out of bounds");
-	}
-	return grid[idx];
+	return grid[Board::get_index(x, y)];
 }
 
 int Board::max_cell() const { return static_cast<int>(grid.size() - 1); }
