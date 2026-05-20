@@ -38,9 +38,15 @@ int& Board::at(size_t x, size_t y) {
 	return grid[Board::get_index(x, y)];
 }
 
-// TODO: fix a bug when the function would return wrong max_cell when the board
-// is anything except filled with consecutive numbers from 0
-int Board::max_cell() const { return static_cast<int>(grid.size() - 1); }
+// Returns actual maximum value in the cell
+int Board::max_cell() const {
+	return *std::max_element(grid.begin(), grid.end());
+}
+
+// Returns max cell which should be in the board
+int Board::expected_max_cell() const {
+	return static_cast<int>(grid.size() - 1);
+}
 
 // TODO: Fix a bug when the function generates unsolvable board. Current
 // implementation generates solvalble board only in ~50% situations
@@ -52,7 +58,7 @@ void Board::randomize() {
 }
 
 void Board::print() const {
-    int max_val = max_cell();
+    int max_val = expected_max_cell();
     int cell_w = (max_val == 0) ? 1 : static_cast<int>(std::log10(max_val)) + 1;
     std::string border((cell_w + 1) * width + 3, '-');
 

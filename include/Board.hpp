@@ -10,6 +10,7 @@ public:
 	[[nodiscard]] int& at(size_t x, size_t y);
 
 	[[nodiscard]] int max_cell() const;
+	[[nodiscard]] int expected_max_cell() const;
 
 	void print() const;
 	void randomize();
