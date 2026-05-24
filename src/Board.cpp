@@ -44,6 +44,19 @@ int Board::max_cell() const {
     return *std::max_element(grid.begin(), grid.end());
 }
 
+/*
+ * Prints the grid.
+ * Each cell width will be equal to the maximum cell width and have paddings
+ * from each side.
+ * Example:
+ * ---------
+ * | 10  1 |
+ * |  4  2 |
+ * ---------
+ */
+// TODO: right now the function uses max_cell function to determine the maximum
+// value in the board. This might be slow on big boards, so probably better
+// approach should be used.
 void Board::print() const {
     int max_val = max_cell();
     int cell_w = (max_val == 0) ? 1 : static_cast<int>(std::log10(max_val)) + 1;
