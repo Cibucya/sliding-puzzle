@@ -1,11 +1,9 @@
 #include "Board.hpp"
 #include "AnsiColors.hpp"
-#include <algorithm> // std::shuffle
+#include <algorithm> // std::max_element
 #include <cmath>     // std::log10
 #include <iomanip>   // std::setw
 #include <iostream>
-#include <numeric>   // std::iota
-#include <random>    // std::mt19937
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -28,6 +26,10 @@ size_t Board::get_index(size_t x, size_t y) const {
     return y * width + x;
 }
 
+size_t Board::size() const {
+	return grid.size();
+}
+
 // Returns a value of the cell at (x, y).
 int Board::at(size_t x, size_t y) const {
 	return grid[Board::get_index(x, y)];
@@ -38,27 +40,13 @@ int& Board::at(size_t x, size_t y) {
 	return grid[Board::get_index(x, y)];
 }
 
-// Returns actual maximum value in the cell
+// Returns actual maximum cell value in the grid
 int Board::max_cell() const {
 	return *std::max_element(grid.begin(), grid.end());
 }
 
-// Returns max cell which should be in the board
-int Board::expected_max_cell() const {
-	return static_cast<int>(grid.size() - 1);
-}
-
-// TODO: Fix a bug when the function generates unsolvable board. Current
-// implementation generates solvalble board only in ~50% situations
-void Board::randomize() {
-    std::iota(grid.begin(), grid.end(), 0);
-    std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(grid.begin(), grid.end(), g);
-}
-
 void Board::print() const {
-    int max_val = expected_max_cell();
+    int max_val = max_cell();
     int cell_w = (max_val == 0) ? 1 : static_cast<int>(std::log10(max_val)) + 1;
     std::string border((cell_w + 1) * width + 3, '-');
 
