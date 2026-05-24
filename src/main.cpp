@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Board.hpp"
+#include "Puzzle.hpp"
 
 void help() {
 	std::cout << "Usage: ./sliding <board_width> <board_height>" << std::endl;
@@ -23,9 +24,9 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	Board board(board_w, board_h);
-	board.randomize();
-	board.print();
+	Puzzle puzzle_obj(board_w, board_h);
+	puzzle_obj.randomize();
+	puzzle_obj.puzzle.print();
 
 	return 0;
 }
