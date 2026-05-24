@@ -1,12 +1,11 @@
 #include "Board.hpp"
 #include "AnsiColors.hpp"
-#include <algorithm> // std::max_element
-#include <cmath>     // std::log10
-#include <iomanip>   // std::setw
+#include <algorithm> // for std::max_element
+#include <cmath>     // for std::log10
+#include <iomanip>   // for std::setw
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include <vector>
 
 Board::Board(size_t w, size_t h) : width(w), height(h), grid(w * h, 0) {}
 
@@ -16,33 +15,33 @@ Board::Board(size_t w, size_t h) : width(w), height(h), grid(w * h, 0) {}
 // size_t and the performance is not as critical in the project, so it is better
 // to keep the code clean.
 size_t Board::get_index(size_t x, size_t y) const {
-	if (x >= width || y >= height) {
-		throw std::out_of_range(
-			"Board index (" + std::to_string(x) + ", " + std::to_string(y) +
-			") out of bounds, width = " + std::to_string(width) +
-			", height = " + std::to_string(height) + ")"
-		);
-	}
+    if (x >= width || y >= height) {
+        throw std::out_of_range(
+            "Board index (" + std::to_string(x) + ", " + std::to_string(y) +
+            ") out of bounds, width = " + std::to_string(width) +
+            ", height = " + std::to_string(height) + ")"
+        );
+    }
     return y * width + x;
 }
 
 size_t Board::size() const {
-	return grid.size();
+    return grid.size();
 }
 
 // Returns a value of the cell at (x, y).
 int Board::at(size_t x, size_t y) const {
-	return grid[Board::get_index(x, y)];
+    return grid[Board::get_index(x, y)];
 }
 
 // Returns a reference to the cell at (x, y).
 int& Board::at(size_t x, size_t y) {
-	return grid[Board::get_index(x, y)];
+    return grid[Board::get_index(x, y)];
 }
 
 // Returns actual maximum cell value in the grid
 int Board::max_cell() const {
-	return *std::max_element(grid.begin(), grid.end());
+    return *std::max_element(grid.begin(), grid.end());
 }
 
 void Board::print() const {

@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <cstddef> // for size_t
 
 class Board {
 public:

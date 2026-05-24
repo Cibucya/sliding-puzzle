@@ -1,6 +1,5 @@
 #pragma once
 #include "Board.hpp"
-#include <cstddef> // for size_t
 
 class Puzzle {
 public:
