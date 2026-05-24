@@ -10,6 +10,7 @@ include_directories(include)
 set(SOURCES
 	"src/main.cpp"
 	"src/Board.cpp"
+	"src/Puzzle.cpp"
 )
 
 add_executable(sliding ${SOURCES})
