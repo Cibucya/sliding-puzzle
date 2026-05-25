@@ -53,6 +53,7 @@ int Board::max_cell() const {
  * | 10  1 |
  * |  4  2 |
  * ---------
+ * Cell with value 0 is displayed as white block
  */
 // TODO: right now the function uses max_cell function to determine the maximum
 // value in the board. This might be slow on big boards, so probably better
