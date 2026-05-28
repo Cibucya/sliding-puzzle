@@ -47,6 +47,22 @@ size_t Puzzle::manhattan_dist(const size_t target) const {
 	return abs(goal_x - x) + abs(goal_y - y);
 }
 
+// Counts the number of inversions in the board.
+ size_t Puzzle::count_inversions() const {
+	size_t inversions = 0;
+	const auto& grid = board.grid;
+
+	for (int i = 0; i < grid.size(); ++i) {
+		if (grid[i] == 0) continue;
+		for (int j = i + 1; j < grid.size(); ++j) {
+			if (grid[j] == 0) continue;
+			if (grid[i] > grid[j]) inversions++;
+		}
+	}
+
+	return inversions;
+}
+
 // TODO: Fix a bug when the function generates unsolvable board. Current
 // implementation generates solvalble board only in ~50% situations
 void Puzzle::randomize() {
