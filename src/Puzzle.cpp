@@ -3,7 +3,6 @@
 #include <algorithm> // for std::shuffle
 #include <numeric>   // for std::iota
 #include <random>    // for std::mt19937
-#include <cmath>     // for std::abs
 
 Puzzle::Puzzle(size_t w, size_t h) : board(w, h) {}
 
