@@ -3,6 +3,7 @@
 #include <algorithm> // for std::shuffle
 #include <numeric>   // for std::iota
 #include <random>    // for std::mt19937
+#include <cmath>     // for std::abs
 
 Puzzle::Puzzle(size_t w, size_t h) : board(w, h) {}
 
@@ -44,7 +45,8 @@ size_t Puzzle::manhattan_dist(const size_t target) const {
 		goal_y = (target - 1) / board.width;
 	}
 
-	return abs(goal_x - x) + abs(goal_y - y);
+	return (std::max(goal_x, x) - std::min(goal_x, x)) +
+		   (std::max(goal_y, y) - std::min(goal_y, y));
 }
 
 // Counts the number of inversions in the board.
