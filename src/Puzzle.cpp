@@ -49,6 +49,7 @@ size_t Puzzle::manhattan_dist(const size_t target) const {
 }
 
 // Counts the number of inversions in the board.
+// An inversion is when a bigger number occurs before smaller one on the board
  size_t Puzzle::count_inversions() const {
 	size_t inversions = 0;
 	const auto& grid = board.grid;
