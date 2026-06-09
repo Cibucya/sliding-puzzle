@@ -1,5 +1,6 @@
 #pragma once
 #include "Puzzle.hpp"
+#include <utility> // std::pair
 #include <vector>
 
 class Board {
@@ -19,6 +20,7 @@ public:
 	[[nodiscard]] size_t get_index(size_t x, size_t y) const;
 	[[nodiscard]] int at(size_t x, size_t y) const;
 	[[nodiscard]] int& at(size_t x, size_t y);
+	[[nodiscard]] std::pair<size_t, size_t> get_position(int target) const;
 
 	[[nodiscard]] int max_cell() const;
 	void print() const;

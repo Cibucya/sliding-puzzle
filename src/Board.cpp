@@ -6,6 +6,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <utility> // std::pair
 
 Board::Board(size_t w, size_t h) : width(w), height(h), grid(w * h, 0) {}
 
@@ -37,6 +38,20 @@ int Board::at(size_t x, size_t y) const {
 // Returns a reference to the cell at (x, y).
 int& Board::at(size_t x, size_t y) {
     return grid[Board::get_index(x, y)];
+}
+
+// Returns the (x, y) position of an element with value target
+std::pair<size_t, size_t> Board::get_position(int target) const {
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			if (at(x, y) == target) {
+				return {x, y};
+			}
+		}
+	}
+	throw std::out_of_range(
+		"Cell with value (" + std::to_string(target) + ") does not exist"
+	);
 }
 
 // Returns actual maximum cell value in the grid
