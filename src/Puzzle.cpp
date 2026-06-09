@@ -35,6 +35,7 @@ size_t Puzzle::manhattan_dist(const size_t target) const {
 	}
 
 	size_t goal_x, goal_y;
+	// Special case for blank space
 	if (target == 0) {
 		goal_x = board.width - 1;
 		goal_y = board.height - 1;
