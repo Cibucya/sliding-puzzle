@@ -11,7 +11,8 @@ public:
 	[[nodiscard]] int expected_max_cell() const;
 	[[nodiscard]] size_t manhattan_dist(const size_t target) const;
 	[[nodiscard]] size_t count_inversions() const;
-	[[nodiscard]] bool is_solvable() const;
+	[[nodiscard]] bool solvable() const;
+	[[nodiscard]] bool solved() const;
 
 	void randomize();
 };

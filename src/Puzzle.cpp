@@ -72,7 +72,7 @@ size_t Puzzle::count_inversions() const {
 
 // Returns whether a puzzle is solvable or not
 // Why this works: https://gemini.google.com/share/49203ca0a274
-bool Puzzle::is_solvable() const {
+bool Puzzle::solvable() const {
 	size_t inversions = count_inversions();
 
 	// Odd width: solvable iff inversions are even
@@ -88,12 +88,54 @@ bool Puzzle::is_solvable() const {
 	return (inversions + blank_row_from_bottom) % 2 == 0;
 }
 
-// TODO: Fix a bug when the function generates unsolvable board. Current
-// implementation generates solvalble board only in ~50% situations
+// Returns true if the function if the puzzle is in the solved state
+bool Puzzle::solved() const {
+	auto& grid = board.grid;
+	if (grid[grid.size() - 1] != 0)
+		return false;
+
+	for (int i = 0; i < grid.size() - 1; ++i) {
+		if (grid[i] != i + 1)
+			return false;
+	}
+
+	return true;
+}
+
+// Randomizes the board into a solvable variation. Guarantees that returned
+// board will not be in solved state.
+
+// TODO: Optimize randomization seeding - currently creates std::random_device 
+// on every randomize() call. Options:
+// 1. Create a static std::mt19937 generator and seed it once at program start
+// 2. Use std::mt19937 g(std::random_device{}()); for inline seeding
+// 3. For better portability: seed from std::chrono::high_resolution_clock::now().time_since_epoch().count()
+// Reference: Seeding std::mt19937 with rd() is slow on some systems.
+
+// TODO: Consider removing std::random_device dependency for non-cryptographic use
+// std::random_device may use weak entropy sources on some systems. 
+// Better approach: seed std::mt19937 directly from system time via chrono.
+// Example: auto seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+//          std::mt19937 g(seed);
 void Puzzle::randomize() {
-    auto& grid = board.grid;
-    std::iota(grid.begin(), grid.end(), 0);
-    std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(grid.begin(), grid.end(), g);
+	do {
+		auto& grid = board.grid;
+		std::iota(grid.begin(), grid.end(), 0);
+		std::random_device rd;
+		std::mt19937 g(rd());
+		std::shuffle(grid.begin(), grid.end(), g);
+
+		if (!solvable()) {
+			// Swap two non-zero element to fix parity
+			auto first = grid.begin();
+			while (*first == 0)
+				first++;
+
+			auto second = first + 1;
+			while (*second == 0)
+				second++;
+
+			std::iter_swap(first, second);
+		}
+	} while (solved());
 }
