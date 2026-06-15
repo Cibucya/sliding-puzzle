@@ -1,5 +1,6 @@
 #pragma once
 #include "Board.hpp"
+#include <cstddef>   // size_t
 
 class Puzzle {
 private:

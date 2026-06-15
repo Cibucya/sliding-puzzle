@@ -1,7 +1,9 @@
 #pragma once
-#include "Puzzle.hpp"
+#include <cstddef> // size_t
 #include <utility> // std::pair
 #include <vector>
+
+class Puzzle;
 
 class Board {
 	// Puzzle class needs to be able to modify grid when shuffling the board.
