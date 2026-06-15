@@ -41,7 +41,7 @@ int& Board::at(size_t x, size_t y) {
 }
 
 // Returns the (x, y) position of an element with value target
-std::pair<size_t, size_t> Board::get_position(int target) const {
+std::pair<size_t, size_t> Board::find_position(int target) const {
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
 			if (at(x, y) == target) {
