@@ -3,6 +3,7 @@
 #include <algorithm> // for std::shuffle
 #include <numeric>   // for std::iota
 #include <random>    // for std::mt19937
+#include <utility>   // for std::pair
 
 Puzzle::Puzzle(size_t w, size_t h) : board(w, h) {}
 
@@ -54,7 +55,7 @@ size_t Puzzle::manhattan_dist(const size_t target) const {
 // linear squence of the board (basically how many times a bigger number would
 // occur before smaller one, if the board would be 1d array, reading from top to
 // bottom, from left to right)
- size_t Puzzle::count_inversions() const {
+size_t Puzzle::count_inversions() const {
 	size_t inversions = 0;
 	const auto& grid = board.grid;
 
@@ -67,6 +68,24 @@ size_t Puzzle::manhattan_dist(const size_t target) const {
 	}
 
 	return inversions;
+}
+
+// Returns whether a puzzle is solvable or not
+// Why this works: https://gemini.google.com/share/49203ca0a274
+bool Puzzle::is_solvable() const {
+	size_t inversions = count_inversions();
+
+	// Odd width: solvable iff inversions are even
+	if (board.width % 2 == 1) {
+		return !(inversions % 2);
+	}
+
+	// Even width
+	auto [x, y] = board.find_position(0);
+	size_t blank_row_from_bottom = board.height - 1;
+
+	// Solvable iff (inversions + blank_row_from_bottom) is even
+	return (inversions + blank_row_from_bottom) % 2 == 0;
 }
 
 // TODO: Fix a bug when the function generates unsolvable board. Current
