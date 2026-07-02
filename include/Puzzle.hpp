@@ -15,5 +15,9 @@ public:
 	[[nodiscard]] bool solvable() const;
 	[[nodiscard]] bool solved() const;
 
+	[[nodiscard]] size_t height() const;
+	[[nodiscard]] size_t width() const;
+
 	void randomize();
+	void print() const;
 };

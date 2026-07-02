@@ -82,7 +82,7 @@ bool Puzzle::solvable() const {
 
 	// Even width
 	auto [x, y] = board.find_position(0);
-	size_t blank_row_from_bottom = board.height - 1;
+	size_t blank_row_from_bottom = board.height - y;
 
 	// Solvable iff (inversions + blank_row_from_bottom) is even
 	return (inversions + blank_row_from_bottom) % 2 == 0;
@@ -100,6 +100,14 @@ bool Puzzle::solved() const {
 	}
 
 	return true;
+}
+
+size_t Puzzle::height() const {
+	return board.height;
+}
+
+size_t Puzzle::width() const {
+	return board.width;
 }
 
 // Randomizes the board into a solvable variation. Guarantees that returned
@@ -138,4 +146,8 @@ void Puzzle::randomize() {
 			std::iter_swap(first, second);
 		}
 	} while (solved());
+}
+
+void Puzzle::print() const {
+	board.print();
 }
