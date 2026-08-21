@@ -84,8 +84,8 @@ bool Puzzle::solvable() const {
 	auto [x, y] = board.find_position(0);
 	size_t blank_row_from_bottom = board.height - y;
 
-	// Solvable iff (inversions + blank_row_from_bottom) is even
-	return (inversions + blank_row_from_bottom) % 2 == 0;
+	// Solvable iff (inversions + blank_row_from_bottom) is odd
+	return (inversions + blank_row_from_bottom) % 2 != 0;
 }
 
 // Returns true if the function if the puzzle is in the solved state
