@@ -3,10 +3,6 @@
 #include "Board.hpp"
 #include "Puzzle.hpp"
 
-void help() {
-	std::cout << "Usage: ./sliding <board_width> <board_height>" << std::endl;
-}
-
 int main(int argc, char** argv) {
 	argparse::ArgumentParser program("sliding", "1.0");
 	program.add_argument("width")
