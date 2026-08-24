@@ -2,8 +2,9 @@
 #include "Puzzle.hpp"
 
 TEST(PuzzleTest, RandomizeProducesSolvableAndUnsolvedBoard) {
-	for (int n = 2; n <= 6; ++n) {
-		for (int m = 2; m <= 6; ++m) {
+	int limit = 6;
+	for (int n = 2; n <= limit; ++n) {
+		for (int m = 2; m <= limit; ++m) {
 			Puzzle puzzle(n, m);
 			for (int i = 0; i < 100; ++i) {
 				puzzle.randomize();
